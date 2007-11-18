@@ -4,7 +4,7 @@
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-11-18.
 " @Last Change: 2007-11-18.
-" @Revision:    0.0.39
+" @Revision:    0.0.41
 
 if &cp || exists("loaded_setsyntax_autoload")
     finish

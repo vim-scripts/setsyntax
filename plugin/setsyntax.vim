@@ -4,8 +4,8 @@
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     2007-11-18.
 " @Last Change: 2007-11-18.
-" @Revision:    0.1.13
-" GetLatestVimScripts: 0 0 setsyntax.vim
+" @Revision:    0.2.20
+" GetLatestVimScripts: 2076 0 setsyntax.vim
 
 if &cp || exists("loaded_setsyntax")
     finish
@@ -27,7 +27,8 @@ if !exists('g:setsyntax_options')
     " Example: >
     "   let g:setsyntax_options['tex'] = {'^texMathZone': {'&l:tw': 4000}}
     let g:setsyntax_options = {}   "{{{2
-    let g:setsyntax_options['tex'] = {'^texMathZone': {'&l:tw': 4000}}
+    let g:setsyntax_options['tex'] = {'^texMathZone': {'&l:tw': 0}}
+    let g:setsyntax_options['viki'] = {'^texmath': {'&l:tw': 0}}
 endif
 
 augroup SetSyntax
@@ -46,4 +47,7 @@ finish
 CHANGES:
 0.1
 - Initial release
+
+0.2
+- Defined viki regions
 
