@@ -1,0 +1,40 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2076
+
+This plugin sets options/variables according to the syntax under the 
+cursor. It was originally created in response to 
+http://groups.google.com/group/vim_use/browse_frm/thread/ff624d5a68f0a562 
+and to solve a similar problem. While this plugin solves that other 
+related problem it doesn't seem to work properly for tex files.
+
+Configuration:
+
+g:setsyntax_options            (default: {})
+    This variable is a dictionary of dictionaries of dictionaries.
+    {FILETYPE => {SYNREGEXP => {OPTION/VARIABLE: VALUE}}}
+    
+    Example:
+      let g:setsyntax_options['tex'] = {'^texMathZone': {'&l:tw': 0}}
+
+
+:SetSyntax SYNTAX,... VAR VALUE ...
+:SetSyntax /REGEXP/ VAR VALUE ...
+    Set syntax-specific options for the current buffer. When using a 
+    REGEXP, the syntax names have to be already defined, i.e. you can use 
+    the REGEXP only after the syntax file was loaded.
+    
+    VAR must be a variable name (see |:let| and |:let-&| for details). 
+    I.e., if you want to set a option, e.g. spelllang, don't use
+
+        SetSyntax /^texMath/ spelllang ""
+
+    but instead use:
+
+      SetSyntax /^texMath/ &l:spelllang ""
+    
+    VALUE actually is an expression that will be evaluated when setting 
+    the variable.
+    
+    NOTE: Blanks in VALUE must be escaped with a backslash. See the help 
+    page on <f-args> for details.
+
+

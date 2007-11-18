@@ -1,0 +1,56 @@
+*setsyntax.txt*     Set options specific for the syntax group under cursor
+                    Author: Thomas Link, micathom at gmail com
+
+
+This plugin sets options/variables according to the syntax under the 
+cursor. It was created in response to 
+http://groups.google.com/group/vim_use/browse_frm/thread/ff624d5a68f0a562
+
+By default, it only sets 'tw' to 4000 inside texMath-Zones. 
+Unfortunately, this approach doesn't work for tables because they aren't 
+marked with a special syntax.
+
+
+-----------------------------------------------------------------------
+Install~
+
+Edit the vba file and type: >
+
+    :so %
+
+See :help vimball for details. If you have difficulties or use vim 7.0, 
+please make sure, you have the current version of vimball (vimscript 
+#1502) installed.
+
+This script requires hookcursormoved (vimscript #2037) to be installed.
+
+
+------------------------------------------------------------------------
+Contents~
+
+    plugin/setsyntax.vim
+        g:setsyntax_options ...... |g:setsyntax_options|
+    autoload/setsyntax.vim
+        setsyntax#Set ............ |setsyntax#Set()|
+
+
+------------------------------------------------------------------------
+plugin/setsyntax.vim~
+
+                                                    *g:setsyntax_options*
+g:setsyntax_options            (default: {})
+    This variable is a dictionary of dictionaries of dictionaries.
+    {FILETYPE => {SYNREGEXP => {OPTION/VARIABLE: VALUE}}}
+    
+    Example: >
+      let g:setsyntax_options['tex'] = {'^texMathZone': {'&l:tw': 4000}}
+<
+
+
+------------------------------------------------------------------------
+autoload/setsyntax.vim~
+
+                                                    *setsyntax#Set()*
+setsyntax#Set
+
+
