@@ -3,12 +3,10 @@
 
 
 This plugin sets options/variables according to the syntax under the 
-cursor. It was created in response to 
-http://groups.google.com/group/vim_use/browse_frm/thread/ff624d5a68f0a562
-
-By default, it only sets 'tw' to 4000 inside texMath-Zones. 
-Unfortunately, this approach doesn't work for tables because they aren't 
-marked with a special syntax.
+cursor. It was originally created in response to 
+http://groups.google.com/group/vim_use/browse_frm/thread/ff624d5a68f0a562 
+and to solve a similar problem. While this plugin solves that other 
+related problem it doesn't seem to work properly for tex files.
 
 
 -----------------------------------------------------------------------
@@ -22,7 +20,8 @@ See :help vimball for details. If you have difficulties or use vim 7.0,
 please make sure, you have the current version of vimball (vimscript 
 #1502) installed.
 
-This script requires hookcursormoved (vimscript #2037) to be installed.
+This script requires hookcursormoved (vimscript #2037) and tlib 
+(vimscript #1863) to be installed.
 
 
 ------------------------------------------------------------------------
@@ -30,7 +29,10 @@ Contents~
 
     plugin/setsyntax.vim
         g:setsyntax_options ...... |g:setsyntax_options|
+        :SetSyntax ............... |:SetSyntax|
     autoload/setsyntax.vim
+        setsyntax#Initialize ..... |setsyntax#Initialize()|
+        setsyntax#SetSyntax ...... |setsyntax#SetSyntax()|
         setsyntax#Set ............ |setsyntax#Set()|
 
 
@@ -43,14 +45,40 @@ g:setsyntax_options            (default: {})
     {FILETYPE => {SYNREGEXP => {OPTION/VARIABLE: VALUE}}}
     
     Example: >
-      let g:setsyntax_options['tex'] = {'^texMathZone': {'&l:tw': 4000}}
+      let g:setsyntax_options['tex'] = {'^texMathZone': {'&l:tw': 0}}
 <
+
+                                                    *:SetSyntax*
+:SetSyntax SYNTAX,... VAR VALUE ... or :SetSyntax /REGEXP/ VAR VALUE ...
+    Set syntax-specific options for the current buffer. When using a 
+    REGEXP, the syntax names have to be already defined, i.e. you can use 
+    the REGEXP only after the syntax file was loaded.
+    
+    VAR must be a variable name (see |:let| and |:let-&| for details). 
+    I.e., if you want to set a option, e.g. spelllang, don't use >
+      SetSyntax /^texMath/ spelllang ""
+<    but instead use: >
+      SetSyntax /^texMath/ &l:spelllang ""
+<    
+    VALUE actually is an expression that will be evaluated when setting 
+    the variable.
+    
+    NOTE: Blanks in VALUE must be escaped with a backslash. See the help 
+    page on <f-args> for details.
 
 
 ------------------------------------------------------------------------
 autoload/setsyntax.vim~
 
+                                                    *setsyntax#Initialize()*
+setsyntax#Initialize()
+
+                                                    *setsyntax#SetSyntax()*
+setsyntax#SetSyntax(syntax_names, VAR1, VALUE1, ...)
+    syntax_names is either a comma-separated list or a slash-enclosed 
+    REGEXP.
+
                                                     *setsyntax#Set()*
-setsyntax#Set
+setsyntax#Set(mode, ?condition_name=b:hookcursormoved_syntax)
 
 
